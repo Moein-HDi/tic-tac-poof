@@ -1,47 +1,74 @@
-<!-- public/index.html -->
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
-  <title>Ephemeral Tic-Tac-Toe</title>
+  <title>Tic-Tac-Poof</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="container">
-    <h1>Ephemeral Tic-Tac-Toe</h1>
+    <h1>Tic-Tac-Poof</h1>
+    <p style="text-align: center; color: #838383; font-size: 12px; line-height: 0.5cm; margin-bottom: 30px;">
+      Its the tic-tac-toe game but everytime you place your 3rd mark on the board, your oldest mark vanishes.
+    </p>
+    <!-- LOBBY -->
+    <div id="lobby">
+      <div class="controls">
+        <div class="row">
+          <button id="createRoomBtn" class="full-width-btn">Create Room</button>
+        </div>
 
-    <section class="controls">
-      <div class="row">
-        <button id="createRoomBtn">Create Room</button>
-        <span id="createdRoomLabel"></span>
+        <div class="divider-with-text">
+          <span>OR</span>
+        </div>
+
+        <div class="row">
+          <input id="roomIdInput" type="text" placeholder="Room code" />
+          <button id="joinRoomBtn">Join Room</button>
+        </div>
+
+        <p id="statusLabel" class="status-text"></p>
+        <p id="errorMessage" class="error"></p>
+      </div>
+    </div>
+
+    <!-- GAME -->
+    <div id="gameSection" class="game-section hidden">
+      <!-- Room code shown near the board while waiting -->
+      <div id="roomCodeDisplay" class="room-code hidden">
+        Room code: <span id="roomCodeValue"></span>
       </div>
 
-      <div class="row">
-        <input id="roomIdInput" type="text" placeholder="Room code" />
-        <button id="joinRoomBtn">Join Room</button>
+      <!-- Horizontal status bar with 3 segments -->
+      <div id="statusBar" class="status-bar">
+        <div id="statusSegment" class="status-segment status-waiting">
+          Waiting...
+        </div>
+        <div id="symbolSegment" class="status-segment">
+          Symbol: <span id="yourSymbol">-</span>
+        </div>
+        <div id="roundSegment" class="status-segment">
+          Round: <span id="round">0</span>
+        </div>
       </div>
 
-      <div class="row">
-        <span id="statusLabel"></span>
+      <!-- Board -->
+      <div id="board" class="board"></div>
+
+      <!-- Result + rematch -->
+      <div id="resultBar" class="result-bar hidden">
+        <span style="font-size: 2rem;" id="resultMessage"></span>
+        <button id="replayBtn">Rematch?</button>
       </div>
-    </section>
 
-    <section class="game-info">
-      <p>Your symbol: <span id="yourSymbol">-</span></p>
-      <p>Current player: <span id="currentPlayer">-</span></p>
-      <p>Round: <span id="round">0</span></p>
-      <p>Move lifetime (rounds): <span id="lifetime">3</span></p>
-    </section>
-
-    <section class="board" id="board"></section>
-
-    <section class="messages">
-      <p id="errorMessage" class="error"></p>
-    </section>
+    </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="client.js"></script>
 </body>
+
 </html>

@@ -121,6 +121,18 @@ function generateRoomCode() {
     return code;
 }
 
+function resetRoomState(room) {
+  room.board = createEmptyBoard();
+  room.round = 0;
+  room.currentPlayer = "X";
+  room.status = "playing"; // or "waiting" if you want ready checks
+  room.marksByPlayer = {
+    X: [],
+    O: []
+  };
+  updateExpiryFlags(room); // clear any flags
+}
+
 // HTTP endpoint to create a room (for invite links)
 app.get("/create-room", (req, res) => {
     let roomId;
@@ -305,6 +317,32 @@ io.on("connection", (socket) => {
             winner: hasWon ? playerSymbol : null
         });
     });
+
+    socket.on("resetGame", ({ roomId }) => {
+    const room = rooms[roomId];
+    if (!room) {
+      socket.emit("errorMessage", "Room not found");
+      return;
+    }
+
+    // Optional: restrict who can reset (e.g., only one of the players)
+    if (!room.players[socket.id]) {
+      socket.emit("errorMessage", "You are not part of this room");
+      return;
+    }
+
+    resetRoomState(room);
+
+    io.to(roomId).emit("gameState", {
+      roomId,
+      board: room.board,
+      currentPlayer: room.currentPlayer,
+      round: room.round,
+      players: room.players,
+      status: room.status,
+      winner: null
+    });
+  });
 
     socket.on("disconnect", () => {
         console.log("Socket disconnected:", socket.id);

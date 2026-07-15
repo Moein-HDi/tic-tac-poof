@@ -1,22 +1,25 @@
 /* public/style.css */
+@font-face {
+  font-family: PressStart2P;
+  /* set name */
+  src: url(assets/PressStart2P-Regular.ttf);
+  /* url of the font */
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #202124;
-  color: #e8eaed;
-  margin: 0;
-  padding: 0;
+  background: #0f0f0f;
+  color: #f8f8f8;
+  font-family: "PressStart2P", system-ui, sans-serif;
 }
 
 .container {
-  max-width: 480px;
-  margin: 32px auto;
-  padding: 16px;
-  background: #303134;
-  border-radius: 8px;
+  border: 4px dashed #737373;
+  background: #171717;
+  padding: 40px;
 }
 
 h1 {
@@ -24,6 +27,11 @@ h1 {
   margin-bottom: 16px;
 }
 
+.hidden {
+  display: none !important;
+}
+
+/* Lobby controls */
 .controls .row {
   display: flex;
   align-items: center;
@@ -31,48 +39,110 @@ h1 {
   gap: 8px;
 }
 
+.full-width-btn {
+  width: 100%;
+}
+
+.divider {
+  border: none;
+  border-top: 4px solid #838383;
+  margin: 12px 0;
+}
+
 button {
   padding: 8px 12px;
-  border-radius: 4px;
-  border: none;
-  background: #1a73e8;
-  color: #fff;
+  border-radius: 0px;
+  border: 4px solid #838383;
+  background: #c8c8c8;
+  color: #000;
   cursor: pointer;
+  font-family: "PressStart2P";
 }
 
 button:hover {
-  background: #185abc;
+  background: #e0e0e0;
 }
 
 input[type="text"] {
   flex: 1;
   padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #5f6368;
-  background: #202124;
+  border-radius: 0px;
+  border: 4px solid #838383;
+  background: #0f0f0f;
   color: #e8eaed;
+  font-family: "PressStart2P";
 }
 
+.status-text {
+  font-size: 10px;
+  margin-top: 8px;
+}
+
+/* Game section layout */
+.game-section {
+  margin-top: 24px;
+}
+
+.room-code {
+  font-size: 10px;
+  margin-bottom: 8px;
+}
+
+/* status bar with 3 segments */
+.status-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 10px;
+}
+
+.status-segment {
+  flex: 1;
+  padding: 6px 8px;
+  border: 3px solid #838383;
+  background: #2a2a33;
+  text-align: center;
+}
+
+/* backgrounds based on state */
+.status-waiting {
+  background: #333366;
+}
+
+.status-your-turn {
+  background: #2e7d32;
+}
+
+.status-opponent-turn {
+  background: #ad1457;
+}
+
+.status-finished {
+  background: #b71c1c;
+}
+
+/* Board + tic-tac-toe grid */
 .board {
   margin: 16px auto;
   display: grid;
-  grid-template-columns: repeat(3, 80px);
-  grid-template-rows: repeat(3, 80px);
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
   gap: 4px;
   justify-content: center;
 }
 
 .cell {
-  width: 80px;
-  height: 80px;
-  background: #202124;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  cursor: pointer;
-  border: 1px solid #5f6368;
+  border: 4px solid #838383;
+  width: 100px;
+  /* 2x scale if your sprite is 32x32 */
+  height: 100px;
+  image-rendering: pixelated;
+  /* keep pixels sharp */
+  image-rendering: crisp-edges;
+  /* Firefox fallback */
+  image-rendering: -moz-crisp-edges;
+  /* older Firefox */
+  padding: 8px;
 }
 
 .cell.empty:hover {
@@ -80,11 +150,17 @@ input[type="text"] {
 }
 
 .cell.X {
-  color: #fbbc04;
+  background-image: url("assets/x.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .cell.O {
-  color: #34a853;
+  background-image: url("assets/o.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .error {
@@ -94,4 +170,56 @@ input[type="text"] {
 
 .cell.willExpireSoon {
   opacity: 0.5;
+}
+
+/* result + rematch */
+.result-bar {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+#resultMessage {
+  font-size: 10px;
+}
+
+.result-win {
+  color: #4caf50;
+}
+
+.result-lose {
+  color: #f44336;
+}
+
+.result-draw {
+  color: #ffeb3b;
+}
+
+.lifetime-info {
+  margin-top: 8px;
+  font-size: 10px;
+}
+
+.divider-with-text {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 25px 0;
+  width: 100%;
+  color: #bdbdbd;
+  font-size: 10px;
+}
+
+.divider-with-text::before,
+.divider-with-text::after {
+  content: "";
+  flex: 1;
+  height: 4px;
+  background: #838383;
+}
+
+.divider-with-text span {
+  white-space: nowrap;
 }
