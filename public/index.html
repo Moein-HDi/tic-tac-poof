@@ -1,0 +1,47 @@
+<!-- public/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Ephemeral Tic-Tac-Toe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Ephemeral Tic-Tac-Toe</h1>
+
+    <section class="controls">
+      <div class="row">
+        <button id="createRoomBtn">Create Room</button>
+        <span id="createdRoomLabel"></span>
+      </div>
+
+      <div class="row">
+        <input id="roomIdInput" type="text" placeholder="Room code" />
+        <button id="joinRoomBtn">Join Room</button>
+      </div>
+
+      <div class="row">
+        <span id="statusLabel"></span>
+      </div>
+    </section>
+
+    <section class="game-info">
+      <p>Your symbol: <span id="yourSymbol">-</span></p>
+      <p>Current player: <span id="currentPlayer">-</span></p>
+      <p>Round: <span id="round">0</span></p>
+      <p>Move lifetime (rounds): <span id="lifetime">3</span></p>
+    </section>
+
+    <section class="board" id="board"></section>
+
+    <section class="messages">
+      <p id="errorMessage" class="error"></p>
+    </section>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="client.js"></script>
+</body>
+</html>
