@@ -25,22 +25,6 @@ function createEmptyBoard() {
     );
 }
 
-// Clean up expired marks based on current round
-// function applyExpiry(room) {
-//   const { board, round } = room;
-//   for (let r = 0; r < BOARD_SIZE; r++) {
-//     for (let c = 0; c < BOARD_SIZE; c++) {
-//       const cell = board[r][c];
-//       if (cell) {
-//         const age = round - cell.placedRound;
-//         if (age >= MOVE_LIFETIME_ROUNDS) {
-//           board[r][c] = null;
-//         }
-//       }
-//     }
-//   }
-// }
-
 // Check win condition for a given player symbol ("X" or "O")
 function checkWin(board, player) {
     // rows
